@@ -25,6 +25,7 @@ class App extends Component {
     this.state = {
       listData,
       inputValue: "",
+      inputError: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -37,6 +38,7 @@ class App extends Component {
     if (name === "inputValue") {
       this.setState({
         [name]: value,
+        inputError: false,
       });
     } else {
 
@@ -54,6 +56,19 @@ class App extends Component {
     const { textContent } = event.target;
 
     if (textContent === "Add To List") {
+
+      const value = this.state.inputValue.trim();
+
+      if (value.length === 0) {
+        this.setState({
+          inputError: true,
+          inputValue: "Empty String Error"
+        })
+
+        return;
+      }
+
+
       listData.push({
         id: this.id++,
         text: this.state.inputValue,
@@ -83,6 +98,7 @@ class App extends Component {
       <div>
         <div>
           <InputTextField
+            inputError={this.state.inputError}
             inputValue={this.state.inputValue}
             handler={this.handleChange}
           />

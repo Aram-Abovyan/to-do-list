@@ -6,7 +6,7 @@ function InputTextField(props) {
         <TextField
           name="inputValue"
           onChange={props.handler}
-          error={false}
+          error={props.inputError}
           id="standard-error-helper-text"
           label="To Do List Item"
           // defaultValue="Hello World"
