@@ -5,9 +5,9 @@ function ToDoButton(props) {
     return (
         <div>
             <Button
-                name={props.buttonData.name}
                 color={props.buttonData.color}
                 onClick={props.handler}
+                id={props.buttonId}
             >
                 {props.buttonData.text}
             </Button> 

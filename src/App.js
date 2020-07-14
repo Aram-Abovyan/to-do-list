@@ -3,20 +3,19 @@ import InputTextField from "./Components/InputTextField";
 import ToDoButton from "./Components/ToDoButton";
 import ToDoList from "./Components/ToDoList"
 import listData from "./Data/listData";
+import ListItemEdit from "./Components/ListItemEdit";
 
 class App extends Component {
   id = 1
 
-  AddButtonData = {
-    name: "add",
+  addButtonData = {
     color: "primary",
-    text: "Add To List"
+    text: "Add To List",
   }
 
-  RemoveButtonData = {
-    name: "remove",
+  removeButtonData = {
     color: "secondary",
-    text: "Remove Selected Items"
+    text: "Remove Selected Items",
   }
 
   constructor() {
@@ -26,6 +25,7 @@ class App extends Component {
       listData,
       inputValue: "",
       inputError: false,
+      edit: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -52,7 +52,6 @@ class App extends Component {
   }
 
   handleClick(event) {
-
     const { textContent } = event.target;
 
     if (textContent === "Add To List") {
@@ -79,7 +78,7 @@ class App extends Component {
         inputValue: "",
         listData,
       });
-    } else {
+    } else if (textContent === "Remove Selected Items") {
 
       for (let i = 0; i < listData.length; i++) {
         if (listData[i].completed === true) {
@@ -90,6 +89,17 @@ class App extends Component {
       this.setState({
         listData,
       })
+    } else if (textContent === "Edit") {
+
+      this.setState({
+        edit: true,
+      });
+    } else if (textContent === "Cancel") {
+      this.setState({
+        edit: false,
+      });
+    } else if (textContent === "Done") {
+      alert("done");
     }
   }
 
@@ -103,7 +113,7 @@ class App extends Component {
             handler={this.handleChange}
           />
           <ToDoButton
-            buttonData={this.AddButtonData}
+            buttonData={this.addButtonData}
             handler={this.handleClick}
           />
         </div>
@@ -112,14 +122,19 @@ class App extends Component {
           <ToDoList
             list={this.state.listData}
             handler={this.handleChange}
+            handleClick={this.handleClick}
           />
           <ToDoButton
-            buttonData={this.RemoveButtonData}
+            buttonData={this.removeButtonData}
             handler={this.handleClick}
           />
         </div>
+
+        <ListItemEdit
+          edit={this.state.edit}
+          handleClick={this.handleClick}
+        />
       </div>
-      
     );
   }
 }
