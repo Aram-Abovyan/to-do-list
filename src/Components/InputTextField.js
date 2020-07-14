@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 function InputTextField(props) {
     return (
         <TextField
-          name="inputValue"
+          name={props.inputName}
           onChange={props.handler}
           error={props.inputError}
           id="standard-error-helper-text"

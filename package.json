@@ -41,8 +41,6 @@
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": ""
-  },
-  "homepage": ""
+  "homepage": "",
+  "devDependencies": {}
 }

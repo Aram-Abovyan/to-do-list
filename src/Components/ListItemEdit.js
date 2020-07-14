@@ -1,5 +1,4 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -25,7 +24,12 @@ function ListItemEdit(props) {
                 <DialogTitle id="form-dialog-title">Edit</DialogTitle>
                 <DialogContent>
 
-                <InputTextField />
+                <InputTextField
+                    inputName="editInputValue"
+                    inputError={props.editError}
+                    inputValue={props.inputValue}
+                    handler={props.handleChange}
+                />
                 
                 </DialogContent>
                 <DialogActions>

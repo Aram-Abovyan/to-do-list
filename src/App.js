@@ -7,6 +7,7 @@ import ListItemEdit from "./Components/ListItemEdit";
 
 class App extends Component {
   id = 1
+  editId = null
 
   addButtonData = {
     color: "primary",
@@ -26,6 +27,8 @@ class App extends Component {
       inputValue: "",
       inputError: false,
       edit: false,
+      editInputValue: "",
+      editError: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,6 +43,13 @@ class App extends Component {
         [name]: value,
         inputError: false,
       });
+    } else if (name === "editInputValue") {
+
+      this.setState({
+        [name]: value,
+        editError: false,
+      });
+
     } else {
 
       const listItem = listData.find(item => item.id === +value);
@@ -90,24 +100,45 @@ class App extends Component {
         listData,
       })
     } else if (textContent === "Edit") {
+      const target = this.editId = event.target.parentElement.id;
+
+      const editInputValue = listData.find(item => `${item.id}` === target).text;
 
       this.setState({
         edit: true,
+        editInputValue, 
       });
+
     } else if (textContent === "Cancel") {
       this.setState({
         edit: false,
       });
     } else if (textContent === "Done") {
-      alert("done");
+      
+      listData.find(item => `${item.id}` === this.editId).text = this.state.editInputValue;
+      this.setState({
+        listData,
+        editInputValue: "",
+        edit: false,
+      });
     }
   }
 
   render() {
+
+    const outerStyles = {
+      padding: 20,
+    };
+
+    const innerStyles = {
+      margin: 20,
+    }
+
     return (
-      <div>
-        <div>
+      <div style={outerStyles}>
+        <div  style={innerStyles}>
           <InputTextField
+            inputName="inputValue"
             inputError={this.state.inputError}
             inputValue={this.state.inputValue}
             handler={this.handleChange}
@@ -118,7 +149,7 @@ class App extends Component {
           />
         </div>
 
-        <div>
+        <div  style={innerStyles}>
           <ToDoList
             list={this.state.listData}
             handler={this.handleChange}
@@ -133,6 +164,9 @@ class App extends Component {
         <ListItemEdit
           edit={this.state.edit}
           handleClick={this.handleClick}
+          handleChange={this.handleChange}
+          inputValue={this.state.editInputValue}
+          editError={this.state.editError}
         />
       </div>
     );
